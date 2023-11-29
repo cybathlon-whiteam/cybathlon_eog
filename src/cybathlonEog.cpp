@@ -19,8 +19,9 @@ EogBci::~EogBci(void) {
 
 bool EogBci::configure(void) {
 	
-    // Take parameters
+    // Take parameters 
 	ros::param::param("~buffer_size", (int&) this->buffer_size_, 512);
+	ros::param::param("~time_eog", (double&) this->time_eog_, 2.0);
 	ros::param::param("~n_channels", (int&) this->n_channels_, 16);
 	ros::param::param("~sampling_freq", (int&) this->sampling_freq_, 512);
 	ros::param::param("~n_samples", (int&) this->n_samples_, 32);
@@ -118,7 +119,7 @@ void EogBci::HasArtifacts(void) {
 	 	this->pub_data_.publish(this->emsg_);
 		ROS_INFO("EOG detected"); 
 
-		ros::Duration(2.0).sleep();
+		ros::Duration(this->time_eog_).sleep();
 
 		this->emsg_.header = this->msg_.header;
 	 	this->emsg_.header.stamp = ros::Time::now();
@@ -135,6 +136,10 @@ void EogBci::on_reconfigure_callback(cybathlon_eog::EogBciConfig &config,
 	// Eog threshold
 	if(this->update_if_different(config.eog_threshold, this->eog_threshold_))
 		ROS_WARN("Updated eog threshold to %f", this->eog_threshold_);
+
+	// Eog threshold
+	if(this->update_if_different(config.time_eog, this->time_eog_))
+		ROS_WARN("Updated eog threshold to %f", this->time_eog_);
 
 }
 

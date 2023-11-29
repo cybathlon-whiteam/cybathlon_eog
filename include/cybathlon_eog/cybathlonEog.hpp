@@ -75,7 +75,7 @@ class EogBci {
 		unsigned int	chleft_;
 		unsigned int	chright_;
 
-
+		double          time_eog_;
 		
 		float 		framerate_;
 
