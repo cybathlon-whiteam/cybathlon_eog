@@ -5,7 +5,7 @@ int main(int argc, char** argv) {
 
 	
 	// ros initialization
-	ros::init(argc, argv, "eogbci");
+	ros::init(argc, argv, "cybathlonEog_node");
 
 	cybathlon::EogBci eogbci;
 	
@@ -21,12 +21,7 @@ int main(int argc, char** argv) {
 			ROS_INFO_ONCE("Eog detection started"); 
 		 }
 
-		if(eogbci.HasArtifacts() == true) {
-		       ROS_INFO_ONCE("Eog detected"); 
-	
-		}
-
-	
+		eogbci.HasArtifacts();
 
          ros::spinOnce();
 		 r.sleep();

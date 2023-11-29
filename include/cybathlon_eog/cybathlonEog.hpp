@@ -14,6 +14,7 @@
 
 #define EOG_CHANNELS 2
 int EOG_EVENT = 1024;
+int EOG_EVENT_FINISH = EOG_EVENT + 0x8000;
 
 namespace cybathlon {
 
@@ -31,7 +32,7 @@ class EogBci {
 		float GetFrameRate(void);
 		void SetThreshold(double value);
 		bool Apply(void);
-		bool HasArtifacts(void);
+		void HasArtifacts(void);
 
 
 	private: 
@@ -49,6 +50,7 @@ class EogBci {
 		std::string            sub_topic_data_;
 		std::string	           pub_topic_data_;
 		bool 			       new_neuro_frame_;
+		bool                   finish_event_;
 		ros::Subscriber		   sub_data_;
 		ros::Publisher		   pub_data_;
 

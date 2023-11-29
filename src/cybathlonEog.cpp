@@ -108,18 +108,24 @@ bool EogBci::Apply(void) {
 	return true;
 }
 
-bool EogBci::HasArtifacts(void) {
+void EogBci::HasArtifacts(void) {
 	if(this->hvalue_.maxCoeff() >= this->eog_threshold_ || this->vvalue_.maxCoeff() >= this->eog_threshold_){
         this->emsg_.header = this->msg_.header;
 	 	this->emsg_.header.stamp = ros::Time::now();
 	 	this->emsg_.event = EOG_EVENT;
 	
+		// Publish starting eog
 	 	this->pub_data_.publish(this->emsg_);
+		ROS_INFO("EOG detected"); 
 
-        return true;
-    }
-	else{
-		return false;
+		ros::Duration(2.0).sleep();
+
+		this->emsg_.header = this->msg_.header;
+	 	this->emsg_.header.stamp = ros::Time::now();
+	 	this->emsg_.event = EOG_EVENT_FINISH;
+	
+		// Publish finish eog
+	 	this->pub_data_.publish(this->emsg_);
     }
 }
 
