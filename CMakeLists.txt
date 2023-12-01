@@ -44,7 +44,7 @@ add_definitions(${EIGEN3_DEFINITIONS})
 
 
 add_library(${PROJECT_NAME}
-	src/cybathlonEog.cpp
+	src/CybathlonEog.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 

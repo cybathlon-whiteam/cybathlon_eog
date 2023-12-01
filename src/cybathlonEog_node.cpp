@@ -1,5 +1,5 @@
 #include <ros/ros.h>
-#include "cybathlon_eog/cybathlonEog.hpp"
+#include "cybathlon_eog/CybathlonEog.hpp"
 
 int main(int argc, char** argv) {
 
