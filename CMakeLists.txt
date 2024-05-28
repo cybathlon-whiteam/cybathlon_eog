@@ -14,7 +14,7 @@ find_package(Eigen3 REQUIRED)
 SET(CMAKE_BUILD_TYPE RelWithDebInfo)
 
 generate_dynamic_reconfigure_options(
-	cfg/EogBci.cfg
+	cfg/EogDetector.cfg
 )
 
 catkin_package(
@@ -44,7 +44,7 @@ add_definitions(${EIGEN3_DEFINITIONS})
 
 
 add_library(${PROJECT_NAME}
-	src/CybathlonEog.cpp
+	src/EogDetector.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 
@@ -61,8 +61,8 @@ add_dependencies(${PROJECT_NAME}
 ## Executables ##
 #################
 
-add_executable(cybathlonEog_node src/cybathlonEog_node.cpp)
-target_link_libraries(cybathlonEog_node ${PROJECT_NAME})
-add_dependencies(cybathlonEog_node ${PROJECT_NAME}_gencfg)
+add_executable(eog_detector src/eog_detector.cpp)
+target_link_libraries(eog_detector ${PROJECT_NAME})
+add_dependencies(eog_detector ${PROJECT_NAME}_gencfg)
 
 
