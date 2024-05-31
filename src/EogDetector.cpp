@@ -100,6 +100,8 @@ void EogDetector::on_receive_data(const rosneuro_msgs::NeuroFrame::ConstPtr& msg
 }
 
 void EogDetector::on_timer_elapsed(const ros::TimerEvent& event) {
+	
+	ROS_INFO("[cybathlon_eog] EOG period elapsed");
 	this->is_period_elapsed_ = true;
 
 	// Publish off event
@@ -115,13 +117,15 @@ void EogDetector::run(void) {
 	while(ros::ok()) {
 
 		if(this->is_eog_detected_ == true && this->is_period_elapsed_ == true) {
-			
+		
+			ROS_INFO("[cybathlon_eog] EOG detected");
 			// publish message
         	this->msg_.header.stamp = ros::Time::now();
         	this->msg_.event = this->eog_event_;
         	this->pub_data_.publish(this->msg_);
 
 			// Restart timer
+			this->init_timer(this->eog_period_, true);
 			this->timer_.start();
 			this->is_period_elapsed_ = false;
 		}
