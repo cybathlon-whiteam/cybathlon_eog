@@ -5,7 +5,7 @@ namespace cybathlon {
 EogDetector::EogDetector(void): p_nh_("~") {
 
     this->sub_topic_data_  =  "/neurodata_filtered";
-    this->pub_topic_data_  =  "/events/bus";
+    this->pub_topic_data_  =  "/events/eog";
 }
 
 EogDetector::~EogDetector(void) {
@@ -136,65 +136,6 @@ void EogDetector::run(void) {
 
 
 }
-
-/*
-bool EogDetector::Apply(void) {
-
-    // Copy data in eigen structure
-    if(this->new_neuro_frame_== false)
-    {
-        //ROS_WARN("Not available data to classify");
-        return false;
-    }
-
-    // Take the data
-    this->dmap_ = Eigen::Map<Eigen::MatrixXf>(this->data_.data(), this->n_channels_, this->n_samples_);
-    this->dmap_.transposeInPlace();
-
-    // Extract channels from buffer
-    this->dfet_.col(0) = this->dmap_.col(this->chleft_).cast<double>();
-    this->dfet_.col(1) = this->dmap_.col(this->chright_).cast<double>();
-
-    // Compute HEOG and VEOG
-    this->heog_ = this->dfet_.col(0) - this->dfet_.col(1);    
-    this->veog_ = (this->dfet_.col(0) + this->dfet_.col(1)) / 2.0f;    
-
-    // Rectify
-    this->hvalue_ = this->heog_.cwiseAbs();
-    this->vvalue_ = this->veog_.cwiseAbs();
-
-    // Set data used
-    this->new_neuro_frame_= false;
-
-    return true;
-}
-
-void EogDetector::HasArtifacts(void) {
-    if(this->hvalue_.maxCoeff() >= this->eog_threshold_ || this->vvalue_.maxCoeff() >= this->eog_threshold_){
-        this->emsg_.header = this->msg_.header;
-        this->emsg_.header.stamp = ros::Time::now();
-        this->emsg_.event = EOG_EVENT;
-    
-        // Publish starting eog
-        this->pub_data_.publish(this->emsg_);
-        //ROS_INFO("EOG detected"); 
-        this->detect_eog_ = true;
-        this->time_detect_eog_ = this->emsg_.header.stamp;
-    }
-    if(this->detect_eog_ && 
-        ((ros::Time::now().toSec() - this->time_detect_eog_.toSec()) >= this->time_eog_)){
-        
-        this->detect_eog_ = false;
-
-        // publish finish EOG
-        this->emsg_.header = this->msg_.header;
-        this->emsg_.header.stamp = ros::Time::now();
-        this->emsg_.event = EOG_EVENT + 0x8000;
-        //ROS_INFO("Finish EOG");
-    
-        this->pub_data_.publish(this->emsg_);
-    }
-}*/
 
 void EogDetector::on_reconfigure_callback(config_eogdetector &config, uint32_t level) {
     
