@@ -10,6 +10,7 @@
 #include <rosneuro_msgs/NeuroOutput.h>
 #include <rosneuro_data/NeuroDataTools.hpp>
 #include <rosneuro_msgs/NeuroEvent.h>
+#include <cybathlon_commons/commons.h>
 #include "cybathlon_eog/EogDetectorConfig.h"
 
 

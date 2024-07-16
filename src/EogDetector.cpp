@@ -5,7 +5,7 @@ namespace cybathlon {
 EogDetector::EogDetector(void): p_nh_("~") {
 
     this->sub_topic_data_  =  "/neurodata_filtered";
-    this->pub_topic_data_  =  "/events/eog";
+    this->pub_topic_data_  =  "/events/artifacts";
 }
 
 EogDetector::~EogDetector(void) {
@@ -18,7 +18,8 @@ bool EogDetector::configure(void) {
     ros::param::param("~n_channels", (int&) this->n_channels_, 16);
     ros::param::param("~n_samples", (int&) this->n_samples_, 32);
 
-    ros::param::param("~eog_event", (int&) this->eog_event_, 1024);
+    ros::param::param("~eog_event", (int&) this->eog_event_, 
+										   static_cast<int>(cybathlon::ArtifactState::Ocular));
     ros::param::param("~eog_period", (double&) this->eog_period_, 2.0);
     ros::param::param("~eog_threshold", (double&) this->eog_threshold_, 30.0);
     ros::param::param("~eog_left_channel", (int&) this->eog_lchannel_, 12); 
@@ -106,7 +107,7 @@ void EogDetector::on_timer_elapsed(const ros::TimerEvent& event) {
 
 	// Publish off event
     this->msg_.header.stamp = ros::Time::now();
-    this->msg_.event = this->eog_event_ + 0x8000;
+    this->msg_.event = static_cast<int>(cybathlon::ArtifactState::EndOcular);
     this->pub_data_.publish(this->msg_);
 }
 

@@ -8,7 +8,9 @@ find_package(catkin REQUIRED COMPONENTS
 			 std_msgs
 			 rosneuro_data
 			 rosneuro_msgs
-			 dynamic_reconfigure)
+			 dynamic_reconfigure
+			 cybathlon_commons)
+
 find_package(Eigen3 REQUIRED)
 
 SET(CMAKE_BUILD_TYPE RelWithDebInfo)
@@ -27,6 +29,7 @@ catkin_package(
 	std_msgs
 	rosneuro_data
 	rosneuro_msgs
+	cybathlon_commons
   DEPENDS
 )
 

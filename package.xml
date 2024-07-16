@@ -16,6 +16,7 @@
   <depend>rosneuro_msgs</depend>
   <depend>message_generation</depend>
   <depend>eigen</depend>
+  <depend>cybathlon_commons</depend>
   
   <exec_depend>message_runtime</exec_depend>
 
